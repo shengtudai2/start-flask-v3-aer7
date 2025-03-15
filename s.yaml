@@ -30,7 +30,7 @@ resources:
       customRuntimeConfig:
         command:
           - python3
-          - index.py
+          - app.py
         port: 9000
       environmentVariables:
         PATH: /var/fc/lang/python3.10/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/ruby/bin:/opt/bin:/code:/code/bin
