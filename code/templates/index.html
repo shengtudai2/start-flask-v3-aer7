@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据查询系统</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+    <script src="{{ url_for('static', filename='treeview.js') }}"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="flex flex-col h-screen">
+        <div class="bg-blue-800 text-white p-4 shadow-lg">
+            <div class="container mx-auto">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-8">
+                        <h1 class="text-xl font-bold">Bric_Web</h1>
+                        <div class="flex space-x-4">
+                            <button class="hover:bg-blue-700 px-4 py-2 rounded transition duration-200 ease-in-out flex items-center">
+                                <i class="fas fa-database mr-2"></i>数据查询
+                            </button>
+                            <button class="hover:bg-blue-700 px-4 py-2 rounded transition duration-200 ease-in-out flex items-center">
+                                <i class="fas fa-search mr-2"></i>快捷搜索
+                            </button>
+                            <button class="hover:bg-blue-700 px-4 py-2 rounded transition duration-200 ease-in-out flex items-center">
+                                <i class="fas fa-chart-line mr-2"></i>数据分析
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-1 overflow-hidden p-4">
+            <div id="sidebar" class="bg-white rounded-lg shadow-lg p-4 overflow-auto" style="min-width: 200px; max-width: 50%;">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-sitemap text-blue-600 mr-2"></i>
+                    <h2 class="text-lg font-semibold text-gray-700">数据目录</h2>
+                </div>
+                <div id="tree-view" class="border-t pt-4">
+                    <ul class="tree">
+                        <li data-id="root" class="flex items-center">
+                            <i class="fas fa-chevron-right mr-2 text-gray-400"></i>展开
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="resizer" class="cursor-col-resize w-1 bg-gray-300 hover:bg-blue-500 transition-colors duration-200"></div>
+
+            <div class="flex-1 bg-white rounded-lg shadow-lg p-6 overflow-auto ml-4">
+                <div class="loading-spinner hidden">
+                    <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-600"></div>
+                </div>
+                
+                <div class="flex flex-col mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4" id="table-name"></h2>
+                    <div class="grid grid-cols-2 gap-4 text-gray-600">
+                        <label class="flex items-center" id="unit">
+                            <i class="fas fa-ruler mr-2 text-blue-600"></i>
+                            <span class="font-medium">单位：</span>
+                        </label>
+                        <label class="flex items-center" id="data-source">
+                            <i class="fas fa-database mr-2 text-blue-600"></i>
+                            <span class="font-medium">数据来源：</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="flex flex-row mb-4">
+                    <button onclick="downloadTableToCSV()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition duration-200 ease-in-out flex items-center">
+                        <i class="fas fa-download mr-2"></i>下载表格
+                    </button>
+                </div>
+                
+                <div class="flex flex-1 overflow-x-auto bg-white rounded-lg">
+                    <table id="table-details" class="display dataTable w-full"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
